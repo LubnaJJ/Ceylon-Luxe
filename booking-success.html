@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey Confirmed | Ceylon Luxe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: #fdfdfd; 
+            color: #1a1a1a; 
+            /* Fixed: Changed hidden to auto to allow scrolling */
+            overflow-y: auto; 
+            min-height: 100vh;
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        /* Animated Mesh Background */
+        .mesh-gradient {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(25,100%,96%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,90%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,91%,1) 0, transparent 50%);
+            filter: blur(100px);
+        }
+
+        .success-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: translateY(30px);
+            opacity: 0;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+        }
+
+        .line-draw {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+
+        /* Modern Button Pulse */
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center py-20">
+
+    <div class="mesh-gradient" id="mesh"></div>
+
+    <div class="max-w-2xl w-full px-6">
+        <div id="card" class="success-card rounded-[60px] p-8 md:p-16 text-center relative">
+            
+            <div class="mb-8 flex justify-center">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="11" stroke="black" stroke-width="0.5" />
+                    <path id="check" d="M7 13L10 16L17 9" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="line-draw" />
+                </svg>
+            </div>
+
+            <span class="text-[9px] font-bold uppercase tracking-[0.6em] text-gray-400 mb-4 block">Reservation Confirmed</span>
+            <h1 class="text-4xl md:text-5xl serif italic mb-6">Awaited in Paradise.</h1>
+            
+            <p class="text-gray-500 leading-relaxed mb-10 font-light text-sm md:text-base">
+                Your journey to <span id="packageName" class="text-black font-semibold italic">Sri Lanka</span> has been secured. An invitation with your full itinerary and personal concierge details is being prepared.
+            </p>
+
+            <div class="bg-white/40 border border-white/60 rounded-3xl p-6 mb-10 grid grid-cols-2 gap-4 text-left">
+                <div>
+                    <p class="text-[8px] uppercase font-bold text-gray-400 tracking-widest mb-1">Booking ID</p>
+                    <p class="text-xs font-mono tracking-tighter" id="bookingID">CL-772901X</p>
+                </div>
+                <div>
+                    <p class="text-[8px] uppercase font-bold text-gray-400 tracking-widest mb-1">Status</p>
+                    <div class="flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                        <p class="text-[10px] text-green-700 font-bold uppercase tracking-tighter">Priority Secured</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-left space-y-6 mb-12">
+                <h4 class="text-[9px] font-bold uppercase tracking-widest text-black border-b border-black/5 pb-2">Next Steps</h4>
+                <div class="flex gap-4 items-start">
+                    <span class="serif italic text-lg text-gray-300">01</span>
+                    <p class="text-xs text-gray-500 leading-relaxed">A personal travel concierge will reach out via WhatsApp/Email within 2 hours to introduce themselves.</p>
+                </div>
+                <div class="flex gap-4 items-start">
+                    <span class="serif italic text-lg text-gray-300">02</span>
+                    <p class="text-xs text-gray-500 leading-relaxed">Your digital arrival pack, including private chauffeur details, will be dispatched to your inbox.</p>
+                </div>
+            </div>
+
+            <button onclick="window.location.href='index.html'" class="btn-glow w-full py-5 bg-black text-white rounded-2xl text-[10px] font-bold uppercase tracking-[0.3em] transition-all duration-500 active:scale-95">Return to Collection</button>
+            
+            <div class="mt-10 flex flex-col items-center gap-2">
+                <p class="text-[9px] text-gray-400 italic">Immediate assistance needed?</p>
+                <a href="tel:+94112345678" class="text-[10px] font-bold border-b border-black pb-0.5">+94 11 234 5678</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            // URL & ID Handling
+            const params = new URLSearchParams(window.location.search);
+            const tour = params.get('tour') || params.get('package');
+            if(tour) document.getElementById('packageName').innerText = decodeURIComponent(tour);
+            document.getElementById('bookingID').innerText = "CL-" + Math.floor(Math.random() * 900000 + 100000);
+
+            // GSAP Animations
+            const tl = gsap.timeline();
+
+            tl.to("#card", {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "power4.out"
+            })
+            .to("#check", {
+                strokeDashoffset: 0,
+                duration: 1,
+                ease: "power2.inOut"
+            }, "-=0.5");
+
+            // Interactive Background Movement
+            document.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX / window.innerWidth) * 30;
+                const moveY = (e.clientY / window.innerHeight) * 30;
+                gsap.to("#mesh", {
+                    x: moveX,
+                    y: moveY,
+                    duration: 2,
+                    ease: "power2.out"
+                });
+            });
+        };
+    </script>
+</body>
+</html>

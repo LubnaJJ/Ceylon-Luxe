@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Your Journey | Ceylon Luxe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; color: #1a1a1a; min-height: 100vh; margin: 0; overflow-x: hidden; }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        /* BACKGROUND IMAGE WITH BLUR OVERLAY */
+        .bg-fixed-image {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=2000') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+        }
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            z-index: -1;
+        }
+
+        /* PREMIUM GLASS CARD */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.15);
+        }
+
+        .step-content { display: none; }
+        .step-content.active { display: block; }
+        
+        input, select, textarea {
+            border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+            border-top: none !important; border-left: none !important; border-right: none !important;
+            border-radius: 0 !important; padding: 12px 0 !important;
+            transition: all 0.4s ease; background: transparent !important;
+            width: 100%;
+        }
+        input:focus { border-bottom-color: #000 !important; outline: none !important; ring: 0 !important; }
+        
+        .progress-bar { height: 4px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #000; width: 33.3%; transition: width 0.6s ease; }
+    </style>
+</head>
+<body class="py-10 px-4">
+
+    <div class="bg-fixed-image"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="max-w-6xl mx-auto">
+        <nav class="flex justify-between items-center mb-10 px-6">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+                <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs">CL</div>
+                <span class="font-bold tracking-tighter text-lg">Ceylon Luxe</span>
+            </div>
+            <div class="w-64">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+            </div>
+        </nav>
+
+        <form id="bookingForm" class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <div class="lg:col-span-7 glass-container p-10 md:p-16">
+                
+                <div id="step1" class="step-content active">
+                    <h2 class="text-4xl serif italic mb-8">Guest Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Full Name</label>
+                            <input type="text" id="fullName" placeholder="Janaan Ahmad" oninput="updateSummary()">
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Email Address</label>
+                            <input type="email" id="email" placeholder="janaanahmad@gmail.com">
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="+94 77 123 4567">
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Nationality</label>
+                            <input type="text" id="nationality" placeholder="e.g. British">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step2" class="step-content">
+                    <h2 class="text-4xl serif italic mb-8">The Itinerary</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Package</label>
+                            <select id="packageSelect" onchange="updateSummary()">
+                                <option value="The Heritage Trail">The Heritage Trail</option>
+                                <option value="Highlands & Mist">Highlands & Mist</option>
+                                <option value="The Azure Escape">The Azure Escape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Travel Date</label>
+                            <input type="date" id="travelDate" onchange="updateSummary()">
+                        </div>
+                        <div>
+                            <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Guests</label>
+                            <select id="guestCount" onchange="updateSummary()">
+                                <option value="1">1 Guest</option>
+                                <option value="2" selected>2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4+">4+ Guests</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step3" class="step-content">
+                    <h2 class="text-4xl serif italic mb-8">Refining Touches</h2>
+                    <label class="text-[10px] uppercase font-bold tracking-widest text-gray-400">Special Requirements</label>
+                    <textarea id="notes" class="h-32" placeholder="Dietary needs, pillow preferences..."></textarea>
+                </div>
+
+                <div class="mt-12 flex gap-4">
+                    <button type="button" id="prevBtn" onclick="changeStep(-1)" class="hidden px-8 py-4 border border-black rounded-full text-[10px] uppercase font-bold tracking-widest hover:bg-black hover:text-white transition">Previous</button>
+                    <button type="button" id="nextBtn" onclick="changeStep(1)" class="px-10 py-4 bg-black text-white rounded-full text-[10px] uppercase font-bold tracking-widest flex-1">Next Step</button>
+                    <button type="submit" id="submitBtn" class="hidden px-10 py-4 bg-green-700 text-white rounded-full text-[10px] uppercase font-bold tracking-widest flex-1">Finalize Booking</button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5">
+                <div class="glass-container p-10 sticky top-10">
+                    <h3 class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-400 mb-10">Reservation Summary</h3>
+                    <div class="space-y-6">
+                        <div class="flex justify-between pb-4 border-b border-black/5">
+                            <span class="text-xs text-gray-400 uppercase">Guest</span>
+                            <span id="sumName" class="font-bold text-sm">Pending</span>
+                        </div>
+                        <div class="flex justify-between pb-4 border-b border-black/5">
+                            <span class="text-xs text-gray-400 uppercase">Experience</span>
+                            <span id="sumPkg" class="font-bold text-sm serif italic">Heritage Trail</span>
+                        </div>
+                        <div class="flex justify-between pb-4 border-b border-black/5">
+                            <span class="text-xs text-gray-400 uppercase">Date</span>
+                            <span id="sumDate" class="font-bold text-sm">TBD</span>
+                        </div>
+                        <div class="pt-6 flex justify-between items-center">
+                            <span class="text-xs text-gray-400 uppercase">Total Estimate</span>
+                            <span id="sumTotal" class="text-3xl font-light">$1,850</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function changeStep(n) {
+            // GSAP slide animation
+            gsap.to(`#step${currentStep}`, { opacity: 0, y: -20, duration: 0.3, onComplete: () => {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep += n;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                
+                // Update Progress Bar
+                document.getElementById('progressFill').style.width = `${(currentStep / totalSteps) * 100}%`;
+                
+                gsap.fromTo(`#step${currentStep}`, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 });
+                
+                // Button Visibility
+                document.getElementById('prevBtn').classList.toggle('hidden', currentStep === 1);
+                document.getElementById('nextBtn').classList.toggle('hidden', currentStep === totalSteps);
+                document.getElementById('submitBtn').classList.toggle('hidden', currentStep !== totalSteps);
+            }});
+        }
+
+        function updateSummary() {
+            const name = document.getElementById('fullName').value || "Guest";
+            const pkg = document.getElementById('packageSelect').value;
+            const date = document.getElementById('travelDate').value || "TBD";
+            const guests = parseInt(document.getElementById('guestCount').value) || 2;
+
+            document.getElementById('sumName').innerText = name;
+            document.getElementById('sumPkg').innerText = pkg;
+            document.getElementById('sumDate').innerText = date;
+
+            let price = 1850;
+            if(pkg === "Highlands & Mist") price = 2200;
+            if(pkg === "The Azure Escape") price = 1950;
+            document.getElementById('sumTotal').innerText = `$${(price * guests).toLocaleString()}`;
+        }
+
+        // THE FINAL FUNCTION: Redirects to your success page
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedPackage = document.getElementById('packageSelect').value;
+            window.location.href = `booking-success.html?tour=${encodeURIComponent(selectedPackage)}`;
+        });
+    </script>
+</body>
+</html>

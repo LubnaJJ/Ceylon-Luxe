@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceylon Luxe | Experience Sri Lanka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Montserrat', sans-serif; color: #1a1a1a; }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-bg {
+            /* High-end cinematic drone shot of Sri Lankan coast/palms */
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), 
+                        url('https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .stagger-card:nth-child(even) {
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <nav class="flex items-center justify-between px-10 py-6 absolute w-full z-10">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                <span class="text-white text-xs">CL</span>
+            </div>
+            <span class="font-bold tracking-widest text-sm uppercase text-white">Ceylon Luxe</span>
+        </div>
+        <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-widest font-semibold text-white/80">
+            <a href="index.html" class="text-white border-b border-white">Home</a>
+            <a href="destinations.html" class="hover:text-white transition">Destinations</a>
+            <a href="about.html" class="hover:text-white transition">Our Story</a>
+            <a href="packages.html" class="hover:opacity-50 transition">Packages</a>
+            <a href="booking.html" class="hover:text-gray-400 transition">Booking</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
+                <img src="images/me.jpg" class="w-6 h-6 rounded-full border border-white/50" onerror="this.src='https://ui-avatars.com/api/?name=A+Aqeel&background=000&color=fff'">
+                <span class="text-[10px] text-white font-medium uppercase tracking-tighter">L. Janaan</span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="h-screen hero-bg flex items-end pb-20 px-10 relative overflow-hidden">
+        <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
+            <div class="text-white space-y-6 mb-10">
+                <h1 class="text-6xl md:text-8xl serif leading-tight">Discover Your <br><span class="italic">Pure Island</span> Magic</h1>
+                <p class="text-lg font-light max-w-md opacity-90 text-white/90">Embark on a journey through emerald tea estates, ancient fortresses, and wild ocean horizons.</p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl shadow-2xl max-w-lg ml-auto">
+                <div class="flex gap-4 mb-6 border-b border-gray-200 pb-4">
+                    <button class="text-xs font-bold uppercase tracking-widest border-b-2 border-black pb-2">Tour</button>
+                    <button class="text-xs font-bold uppercase tracking-widest text-gray-400 pb-2">Hotel</button>
+                    <button class="text-xs font-bold uppercase tracking-widest text-gray-400 pb-2">Flight</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Location</label>
+                            <select id="heroLocation" class="w-full bg-gray-50 border-none rounded-xl p-3 text-sm focus:ring-1 focus:ring-black">
+                                <option value="Ella">Ella, Sri Lanka</option>
+                                <option value="Galle">Galle, Sri Lanka</option>
+                                <option value="Sigiriya">Sigiriya, Sri Lanka</option>
+                                <option value="Jaffna">Jaffna, Sri Lanka</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] uppercase font-bold text-gray-400">Month</label>
+                            <input type="month" id="heroDate" class="w-full bg-gray-50 border-none rounded-xl p-3 text-sm">
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <label class="text-[9px] uppercase font-bold text-gray-400">Experience Type</label>
+                        <select class="w-full bg-gray-50 border-none rounded-xl p-3 text-sm">
+                            <option>Wellness & Yoga</option>
+                            <option>Safari & Wildlife</option>
+                            <option>Heritage & Culture</option>
+                        </select>
+                    </div>
+
+                    <button onclick="mainSearch()" class="w-full bg-black text-white py-4 rounded-2xl text-xs font-bold uppercase tracking-widest mt-4 hover:bg-neutral-800 transition active:scale-95">Search Experiences</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="py-24 px-10 max-w-6xl mx-auto text-center">
+        <h2 class="text-3xl md:text-5xl font-light leading-snug">
+            We are a team of curators dedicated to <span class="text-gray-400">unveiling the soul of Sri Lanka</span> through personalized heritage trails and wild escapes.
+        </h2>
+    </section>
+
+    <section class="py-20 bg-white px-10">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-400">Curated Portfolios</span>
+                <h3 class="text-5xl serif mt-2">Bespoke Collections</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+                <div class="stagger-card group cursor-pointer relative overflow-hidden rounded-2xl aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1586611292717-f828b167408c?q=80&w=1000" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h5 class="text-white text-2xl serif italic">The Coastal Edit</h5>
+                        <p class="text-white/70 text-[10px] uppercase tracking-widest mt-2">Surfing & Private Villas</p>
+                    </div>
+                </div>
+
+                <div class="stagger-card group cursor-pointer relative overflow-hidden rounded-2xl aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1543731068-7e0f5beff43a?q=80&w=1000" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h5 class="text-white text-2xl serif italic">Mist & Mountains</h5>
+                        <p class="text-white/70 text-[10px] uppercase tracking-widest mt-2">Tea Estates & Hiking</p>
+                    </div>
+                </div>
+
+                <div class="stagger-card group cursor-pointer relative overflow-hidden rounded-2xl aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1620619767323-b95a89183081?q=80&w=1000" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h5 class="text-white text-2xl serif italic">Ancient Echoes</h5>
+                        <p class="text-white/70 text-[10px] uppercase tracking-widest mt-2">UNESCO Heritage Sites</p>
+                    </div>
+                </div>
+
+                <div class="stagger-card group cursor-pointer relative overflow-hidden rounded-2xl aspect-[3/4]">
+                    <img src="https://images.unsplash.com/photo-1565018939260-032d4e215638?q=80&w=1000" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h5 class="text-white text-2xl serif italic">Wild Horizon</h5>
+                        <p class="text-white/70 text-[10px] uppercase tracking-widest mt-2">Leopard Safaris</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experiences" class="py-20 bg-gray-50 px-10">
+        <div class="container mx-auto">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-400">Exploration</span>
+                    <h3 class="text-4xl serif mt-2 italic">Most Coveted Escapes</h3>
+                </div>
+                <a href="destinations.html" class="text-[10px] font-bold uppercase tracking-widest border-b border-black pb-1">View All</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="group cursor-pointer" onclick="quickBook('Ella')">
+                    <div class="overflow-hidden rounded-3xl h-[450px] mb-4 relative">
+                        <img src="images/img2.jpg" class="h-full w-full object-cover group-hover:scale-110 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1546708973-b339540b5162?w=800'">
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <p class="text-[10px] uppercase tracking-widest font-bold opacity-80">Central Highlands</p>
+                            <h4 class="text-2xl serif italic">Ella Nine Arch Bridge</h4>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center px-2">
+                        <p class="text-xs font-bold">$120 / <span class="text-gray-400 font-normal">Day</span></p>
+                        <button class="text-[10px] uppercase font-bold tracking-tighter border border-gray-200 px-4 py-2 rounded-full hover:bg-black hover:text-white transition">Reserve Now</button>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer" onclick="quickBook('Mirissa')">
+                    <div class="overflow-hidden rounded-3xl h-[450px] mb-4 relative">
+                        <img src="images/img1.jpg" class="h-full w-full object-cover group-hover:scale-110 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800'">
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <p class="text-[10px] uppercase tracking-widest font-bold opacity-80">Southern Coast</p>
+                            <h4 class="text-2xl serif italic">Mirissa Secret Beach</h4>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center px-2">
+                        <p class="text-xs font-bold">$95 / <span class="text-gray-400 font-normal">Day</span></p>
+                        <button class="text-[10px] uppercase font-bold tracking-tighter border border-gray-200 px-4 py-2 rounded-full hover:bg-black hover:text-white transition">Reserve Now</button>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer" onclick="quickBook('Sigiriya')">
+                    <div class="overflow-hidden rounded-3xl h-[450px] mb-4 relative">
+                        <img src="images/img3.jpg" class="h-full w-full object-cover group-hover:scale-110 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1620619767323-b95a89183081?w=800'">
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <p class="text-[10px] uppercase tracking-widest font-bold opacity-80">Cultural Triangle</p>
+                            <h4 class="text-2xl serif italic">Sigiriya Rock Fortress</h4>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center px-2">
+                        <p class="text-xs font-bold">$150 / <span class="text-gray-400 font-normal">Day</span></p>
+                        <button class="text-[10px] uppercase font-bold tracking-tighter border border-gray-200 px-4 py-2 rounded-full hover:bg-black hover:text-white transition">Reserve Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-20 px-10 rounded-t-[60px]">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
+            <div>
+                <h2 class="text-5xl serif italic mb-8">Ready for your <br>next story?</h2>
+                <p class="text-gray-400 max-w-sm mb-8 font-light">Join our newsletter to receive curated travel guides and exclusive access to new boutique stays.</p>
+                <div class="flex border-b border-gray-700 pb-2">
+                    <input type="email" placeholder="Email Address" class="bg-transparent border-none text-sm w-full focus:ring-0">
+                    <button class="text-xs uppercase font-bold tracking-widest">Subscribe</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-10">
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-widest text-gray-500 mb-6">Contact</h4>
+                    <p class="text-sm font-light">hello@ceylonluxe.com</p>
+                    <p class="text-sm font-light mt-2">+94 11 234 5678</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-widest text-gray-500 mb-6">Location</h4>
+                    <p class="text-sm font-light">74 Horton Place</p>
+                    <p class="text-sm font-light mt-2">Colombo 07, SL</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function mainSearch() {
+            const loc = document.getElementById('heroLocation').value;
+            const date = document.getElementById('heroDate').value;
+            if(!date) {
+                alert("Ayubowan! Please select your preferred travel month.");
+                return;
+            }
+            window.location.href = `destinations.html?search=${loc}&date=${date}`;
+        }
+
+        function quickBook(tourName) {
+            window.location.href = `booking-success.html?tour=${tourName}`;
+        }
+    </script>
+
+</body>
+</html>
