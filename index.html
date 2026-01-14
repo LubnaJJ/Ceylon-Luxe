@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
-        body { font-family: 'Montserrat', sans-serif; color: #1a1a1a; }
+        body { font-family: 'Montserrat', sans-serif; color: #1a1a1a; overflow-x: hidden; }
         .serif { font-family: 'Playfair Display', serif; }
         
         .glass-card {
@@ -18,7 +18,6 @@
         }
 
         .hero-bg {
-            /* High-end cinematic drone shot of Sri Lankan coast/palms */
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), 
                         url('https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=2000');
             background-size: cover;
@@ -26,12 +25,52 @@
             background-attachment: fixed;
         }
 
-        .stagger-card:nth-child(even) {
-            margin-top: 4rem;
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .hero-bg { background-attachment: scroll; } /* Better mobile performance */
+            
+            /* Spacing adjustments */
+            nav { padding: 1.5rem !important; }
+            header { padding: 0 1.5rem 5rem 1.5rem !important; height: auto !important; min-height: 100vh; }
+            section { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+
+            /* Text sizing */
+            header h1 { font-size: 3.2rem !important; margin-top: 6rem; }
+            .hero-container { grid-template-columns: 1fr !important; }
+            
+            /* Search Card Responsive Fix */
+            .glass-card { margin-top: 2rem; width: 100% !important; max-width: none !important; }
+            .search-grid { grid-template-columns: 1fr !important; } /* Stacks the inputs */
+
+            /* Portfolio Cards */
+            .stagger-card:nth-child(even) { margin-top: 0 !important; }
+            .collections-grid { grid-template-columns: 1fr !important; }
+            
+            /* Footer */
+            footer { padding: 4rem 1.5rem !important; border-radius: 40px 40px 0 0 !important; }
+            footer .grid-cols-2 { grid-template-columns: 1fr !important; gap: 2.5rem; }
         }
+
+        /* Mobile Side Bar Transition */
+        #mobileNav { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
 <body class="bg-white">
+
+    <div id="mobileNav" class="fixed inset-y-0 right-0 w-[280px] bg-white z-[100] transform translate-x-full shadow-2xl flex flex-col p-10">
+        <button onclick="toggleMenu()" class="self-end text-3xl text-black mb-10">&times;</button>
+        <div class="flex flex-col gap-8 text-sm font-bold uppercase tracking-[0.3em] text-gray-900">
+            <a href="index.html" onclick="toggleMenu()">Home</a>
+            <a href="destinations.html" onclick="toggleMenu()">Destinations</a>
+            <a href="about.html" onclick="toggleMenu()">Our Story</a>
+            <a href="packages.html" onclick="toggleMenu()">Packages</a>
+            <a href="booking.html" onclick="toggleMenu()">Booking</a>
+        </div>
+        <div class="mt-auto border-t pt-8">
+            <p class="text-[9px] uppercase tracking-widest text-gray-400">Get in touch</p>
+            <p class="text-xs mt-2">hello@ceylonluxe.com</p>
+        </div>
+    </div>
 
     <nav class="flex items-center justify-between px-10 py-6 absolute w-full z-10">
         <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
@@ -40,6 +79,7 @@
             </div>
             <span class="font-bold tracking-widest text-sm uppercase text-white">Ceylon Luxe</span>
         </div>
+        
         <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-widest font-semibold text-white/80">
             <a href="index.html" class="text-white border-b border-white">Home</a>
             <a href="destinations.html" class="hover:text-white transition">Destinations</a>
@@ -47,16 +87,22 @@
             <a href="packages.html" class="hover:opacity-50 transition">Packages</a>
             <a href="booking.html" class="hover:text-gray-400 transition">Booking</a>
         </div>
+
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20">
-                <img src="images/me.jpg" class="w-6 h-6 rounded-full border border-white/50" onerror="this.src='https://ui-avatars.com/api/?name=A+Aqeel&background=000&color=fff'">
+                <img src="images/me.jpg" class="w-6 h-6 rounded-full border border-white/50" onerror="this.src='https://ui-avatars.com/api/?name=L+Janaan&background=000&color=fff'">
                 <span class="text-[10px] text-white font-medium uppercase tracking-tighter">L. Janaan</span>
             </div>
+            <button onclick="toggleMenu()" class="md:hidden text-white focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+                </svg>
+            </button>
         </div>
     </nav>
 
     <header class="h-screen hero-bg flex items-end pb-20 px-10 relative overflow-hidden">
-        <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-end">
+        <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-end hero-container">
             <div class="text-white space-y-6 mb-10">
                 <h1 class="text-6xl md:text-8xl serif leading-tight">Discover Your <br><span class="italic">Pure Island</span> Magic</h1>
                 <p class="text-lg font-light max-w-md opacity-90 text-white/90">Embark on a journey through emerald tea estates, ancient fortresses, and wild ocean horizons.</p>
@@ -70,7 +116,7 @@
                 </div>
                 
                 <div class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-4 search-grid">
                         <div class="space-y-1">
                             <label class="text-[9px] uppercase font-bold text-gray-400">Location</label>
                             <select id="heroLocation" class="w-full bg-gray-50 border-none rounded-xl p-3 text-sm focus:ring-1 focus:ring-black">
@@ -114,7 +160,7 @@
                 <h3 class="text-5xl serif mt-2">Bespoke Collections</h3>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start collections-grid">
                 <div class="stagger-card group cursor-pointer relative overflow-hidden rounded-2xl aspect-[3/4]">
                     <img src="https://images.unsplash.com/photo-1586611292717-f828b167408c?q=80&w=1000" class="object-cover h-full w-full group-hover:scale-105 transition duration-500">
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
@@ -236,6 +282,17 @@
     </footer>
 
     <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileNav');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
         function mainSearch() {
             const loc = document.getElementById('heroLocation').value;
             const date = document.getElementById('heroDate').value;

@@ -17,43 +17,58 @@
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             border: 1px solid rgba(0,0,0,0.05);
         }
-        .package-card:hover { 
-            transform: translateY(-15px);
-            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.1);
-            border-color: rgba(0,0,0,0.1);
+        @media (min-width: 1024px) {
+            .package-card:hover { 
+                transform: translateY(-15px);
+                box-shadow: 0 30px 60px -12px rgba(0,0,0,0.1);
+                border-color: rgba(0,0,0,0.1);
+            }
         }
 
-        /* Image Zoom Hover */
         .img-container img { transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
         .package-card:hover .img-container img { transform: scale(1.1); }
 
-        /* Button Liquid Animation */
-        .btn-luxe {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
+        .btn-luxe { position: relative; overflow: hidden; transition: all 0.4s ease; }
         .btn-luxe:hover { letter-spacing: 2px; }
         
-        /* Reveal Animation Utility */
         .reveal { opacity: 0; transform: translateY(40px); }
 
-        /* Custom Pulse for the Highlighted Badge */
         @keyframes subtle-pulse {
             0% { opacity: 0.8; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
             100% { opacity: 0.8; transform: scale(1); }
         }
         .pulse-badge { animation: subtle-pulse 3s infinite ease-in-out; }
+
+        /* Sidebar Transition */
+        #mobile-menu { transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); }
     </style>
 </head>
 <body>
 
-    <nav class="flex items-center justify-between px-10 py-6 sticky top-0 bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100">
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[100] translate-x-full flex flex-col p-10">
+        <div class="flex justify-between items-center mb-16">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs">CL</div>
+                <span class="font-bold tracking-widest text-sm uppercase">Ceylon Luxe</span>
+            </div>
+            <button onclick="toggleMenu()" class="text-3xl">&times;</button>
+        </div>
+        <div class="flex flex-col gap-8 text-2xl serif italic">
+            <a href="index.html" class="hover:pl-4 transition-all duration-300">Home</a>
+            <a href="destinations.html" class="hover:pl-4 transition-all duration-300">Destinations</a>
+            <a href="about.html" class="hover:pl-4 transition-all duration-300">Our Story</a>
+            <a href="packages.html" class="border-l-4 border-black pl-4">Packages</a>
+            <a href="booking.html" class="hover:pl-4 transition-all duration-300">Booking</a>
+        </div>
+    </div>
+
+    <nav class="flex items-center justify-between px-6 md:px-10 py-6 sticky top-0 bg-white/80 backdrop-blur-xl z-50 border-b border-gray-100">
         <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
             <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs">CL</div>
             <span class="font-bold tracking-widest text-sm uppercase">Ceylon Luxe</span>
         </div>
+        
         <div class="hidden md:flex gap-10 text-[10px] uppercase tracking-widest font-bold">
             <a href="index.html" class="hover:text-gray-400 transition">Home</a>
             <a href="destinations.html" class="hover:text-gray-400 transition">Destinations</a>
@@ -61,40 +76,45 @@
             <a href="packages.html" class="border-b border-black pb-1">Packages</a>
             <a href="booking.html" class="hover:text-gray-400 transition">Booking</a>
         </div>
+
+        <button onclick="toggleMenu()" class="md:hidden flex flex-col gap-1.5">
+            <div class="w-6 h-0.5 bg-black"></div>
+            <div class="w-6 h-0.5 bg-black"></div>
+        </button>
     </nav>
 
-    <header class="py-24 px-10 text-center bg-white">
+    <header class="py-16 md:py-24 px-6 md:px-10 text-center bg-white">
         <div class="reveal">
-            <span class="text-[10px] font-bold uppercase tracking-[0.6em] text-gray-400 mb-4 block">Exclusivity Defined</span>
-            <h1 class="text-5xl md:text-7xl serif italic mb-6">Signature Journeys</h1>
-            <p class="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
+            <span class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.6em] text-gray-400 mb-4 block">Exclusivity Defined</span>
+            <h1 class="text-4xl md:text-7xl serif italic mb-6">Signature Journeys</h1>
+            <p class="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed text-sm md:text-base">
                 Experience Sri Lanka through a lens of sophistication. Our packages are not just itineraries; they are personal narratives of luxury.
             </p>
         </div>
     </header>
 
-    <main class="py-20 px-6 md:px-10 container mx-auto">
+    <main class="py-10 md:py-20 px-6 md:px-10 container mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             
-            <div class="package-card bg-white rounded-[45px] overflow-hidden flex flex-col reveal">
-                <div class="h-72 overflow-hidden relative img-container">
+            <div class="package-card bg-white rounded-[35px] md:rounded-[45px] overflow-hidden flex flex-col reveal">
+                <div class="h-64 md:h-72 overflow-hidden relative img-container">
                     <img src="https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=1200" class="w-full h-full object-cover">
                     <div class="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest shadow-sm">7 Days / 6 Nights</div>
                 </div>
-                <div class="p-10 flex-grow flex flex-col">
-                    <h3 class="text-3xl serif italic mb-2">The Heritage Trail</h3>
-                    <p class="text-[11px] font-bold text-orange-600 uppercase tracking-widest mb-8">Ancient Cities & Sigiriya</p>
+                <div class="p-8 md:p-10 flex-grow flex flex-col">
+                    <h3 class="text-2xl md:text-3xl serif italic mb-2">The Heritage Trail</h3>
+                    <p class="text-[10px] md:text-[11px] font-bold text-orange-600 uppercase tracking-widest mb-8">Ancient Cities & Sigiriya</p>
                     
                     <ul class="space-y-5 mb-12 flex-grow">
-                        <li class="group/item flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">01</span> 
                             <span>Private sunrise climb of Sigiriya Rock with a resident historian.</span>
                         </li>
-                        <li class="group/item flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">02</span> 
                             <span>VIP access to the Temple of the Tooth Relic in Kandy.</span>
                         </li>
-                        <li class="group/item flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">03</span> 
                             <span>Exclusive clay-pot cooking class in a village home.</span>
                         </li>
@@ -113,26 +133,26 @@
                 </div>
             </div>
 
-            <div class="package-card bg-white rounded-[45px] overflow-hidden border-2 border-black/5 flex flex-col relative reveal">
-                <div class="absolute top-0 right-10 bg-black text-white px-5 py-2.5 rounded-b-2xl text-[9px] font-bold uppercase tracking-widest z-10 pulse-badge">Most Coveted</div>
-                <div class="h-72 overflow-hidden relative img-container">
+            <div class="package-card bg-white rounded-[35px] md:rounded-[45px] overflow-hidden border-2 border-black/5 flex flex-col relative reveal">
+                <div class="absolute top-0 right-6 md:right-10 bg-black text-white px-4 md:px-5 py-2.5 rounded-b-2xl text-[9px] font-bold uppercase tracking-widest z-10 pulse-badge">Most Coveted</div>
+                <div class="h-64 md:h-72 overflow-hidden relative img-container">
                     <img src="https://images.unsplash.com/photo-1586902197503-e71026292412?q=80&w=1200" class="w-full h-full object-cover">
                     <div class="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest shadow-sm">5 Days / 4 Nights</div>
                 </div>
-                <div class="p-10 flex-grow flex flex-col bg-neutral-50/30">
-                    <h3 class="text-3xl serif italic mb-2">Highlands & Mist</h3>
-                    <p class="text-[11px] font-bold text-green-700 uppercase tracking-widest mb-8">Tea Estates & Rolling Hills</p>
+                <div class="p-8 md:p-10 flex-grow flex flex-col bg-neutral-50/30">
+                    <h3 class="text-2xl md:text-3xl serif italic mb-2">Highlands & Mist</h3>
+                    <p class="text-[10px] md:text-[11px] font-bold text-green-700 uppercase tracking-widest mb-8">Tea Estates & Rolling Hills</p>
                     
                     <ul class="space-y-5 mb-12 flex-grow">
-                        <li class="flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">01</span> 
                             <span>First-class observation rail journey through the mountains.</span>
                         </li>
-                        <li class="flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">02</span> 
                             <span>Luxury bungalow stay inside a functional tea plantation.</span>
                         </li>
-                        <li class="flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">03</span> 
                             <span>Private tea-tasting session with a master blender.</span>
                         </li>
@@ -151,25 +171,25 @@
                 </div>
             </div>
 
-            <div class="package-card bg-white rounded-[45px] overflow-hidden flex flex-col reveal">
-                <div class="h-72 overflow-hidden relative img-container">
-                    <img src="images/img1.jpg" class="w-full h-full object-cover">
+            <div class="package-card bg-white rounded-[35px] md:rounded-[45px] overflow-hidden flex flex-col reveal">
+                <div class="h-64 md:h-72 overflow-hidden relative img-container">
+                    <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1200" class="w-full h-full object-cover">
                     <div class="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-widest shadow-sm">6 Days / 5 Nights</div>
                 </div>
-                <div class="p-10 flex-grow flex flex-col">
-                    <h3 class="text-3xl serif italic mb-2">The Azure Escape</h3>
-                    <p class="text-[11px] font-bold text-blue-600 uppercase tracking-widest mb-8">Southern Coast & Galle Fort</p>
+                <div class="p-8 md:p-10 flex-grow flex flex-col">
+                    <h3 class="text-2xl md:text-3xl serif italic mb-2">The Azure Escape</h3>
+                    <p class="text-[10px] md:text-[11px] font-bold text-blue-600 uppercase tracking-widest mb-8">Southern Coast & Galle Fort</p>
                     
                     <ul class="space-y-5 mb-12 flex-grow">
-                        <li class="flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">01</span> 
                             <span>Private yacht charter for whale watching at dawn.</span>
                         </li>
-                        <li class="flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">02</span> 
                             <span>Architectural walking tour of the historic Galle Fort.</span>
                         </li>
-                        <li class="flex items-start gap-4 text-xs text-gray-500 hover:text-black transition">
+                        <li class="flex items-start gap-4 text-xs text-gray-500">
                             <span class="font-bold text-black border-b border-black/10">03</span> 
                             <span>Seafood dining experience on a secluded private beach.</span>
                         </li>
@@ -191,40 +211,47 @@
         </div>
     </main>
 
-    <section class="py-24 bg-black text-white rounded-t-[60px] px-10">
-        <div class="container mx-auto">
-            <h2 class="text-4xl serif italic mb-16 text-center">The Luxury Standards</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
-                <div class="group reveal text-center">
-                    <div class="text-3xl mb-6 transform group-hover:scale-125 transition duration-500">🚖</div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest mb-3">Private Chauffeur</h4>
-                    <p class="text-[10px] text-gray-500 leading-relaxed px-4">Dedicated English-speaking guide and luxury vehicle throughout.</p>
+    <section class="py-16 md:py-24 bg-black text-white rounded-t-[40px] md:rounded-t-[60px] px-6 md:px-10">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl serif italic mb-12 md:mb-16">The Luxury Standards</h2>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+                <div class="group reveal">
+                    <div class="text-2xl md:text-3xl mb-4 md:mb-6">🚖</div>
+                    <h4 class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-3">Private Chauffeur</h4>
+                    <p class="text-[9px] md:text-[10px] text-gray-500 leading-relaxed px-2 md:px-4">Dedicated guide and luxury vehicle throughout.</p>
                 </div>
-                <div class="group reveal text-center">
-                    <div class="text-3xl mb-6 transform group-hover:scale-125 transition duration-500">🏨</div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest mb-3">Boutique Stays</h4>
-                    <p class="text-[10px] text-gray-500 leading-relaxed px-4">Handpicked 5-star villas and eco-luxury retreats.</p>
+                <div class="group reveal">
+                    <div class="text-2xl md:text-3xl mb-4 md:mb-6">🏨</div>
+                    <h4 class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-3">Boutique Stays</h4>
+                    <p class="text-[9px] md:text-[10px] text-gray-500 leading-relaxed px-2 md:px-4">Handpicked 5-star villas and eco-luxury retreats.</p>
                 </div>
-                <div class="group reveal text-center">
-                    <div class="text-3xl mb-6 transform group-hover:scale-125 transition duration-500">🍽️</div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest mb-3">Gourmet Board</h4>
-                    <p class="text-[10px] text-gray-500 leading-relaxed px-4">Daily organic breakfast and curated gourmet dinners.</p>
+                <div class="group reveal">
+                    <div class="text-2xl md:text-3xl mb-4 md:mb-6">🍽️</div>
+                    <h4 class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-3">Gourmet Board</h4>
+                    <p class="text-[9px] md:text-[10px] text-gray-500 leading-relaxed px-2 md:px-4">Daily organic breakfast and curated dinners.</p>
                 </div>
-                <div class="group reveal text-center">
-                    <div class="text-3xl mb-6 transform group-hover:scale-125 transition duration-500">🎫</div>
-                    <h4 class="text-[10px] font-bold uppercase tracking-widest mb-3">All Entry Fees</h4>
-                    <p class="text-[10px] text-gray-500 leading-relaxed px-4">Seamless access to all monuments and national parks.</p>
+                <div class="group reveal">
+                    <div class="text-2xl md:text-3xl mb-4 md:mb-6">🎫</div>
+                    <h4 class="text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-3">All Entry Fees</h4>
+                    <p class="text-[9px] md:text-[10px] text-gray-500 leading-relaxed px-2 md:px-4">Seamless access to all monuments and parks.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer class="bg-black text-white py-12 px-10 text-center border-t border-white/5">
-        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-600">Ceylon Luxe • Curated Excellence • 2026</p>
+        <p class="text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-gray-600">Ceylon Luxe • Curated Excellence • 2026</p>
     </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
+
+        // Sidebar Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('translate-x-full');
+            document.body.classList.toggle('overflow-hidden');
+        }
 
         // Page Header Fade
         gsap.to(".reveal", {
@@ -239,11 +266,9 @@
             }
         });
 
-        // Package Selection Logic
         function selectPackage(packageName) {
-            // GSAP fade out before navigation
             gsap.to("body", { opacity: 0, duration: 0.6, onComplete: () => {
-                window.location.href = `booking-success.html?package=${encodeURIComponent(packageName)}`;
+                window.location.href = `booking.html?package=${encodeURIComponent(packageName)}`;
             }});
         }
     </script>
