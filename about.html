@@ -10,133 +10,136 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Montserrat', sans-serif; background-color: #fff; color: #1a1a1a; overflow-x: hidden; }
         .serif { font-family: 'Playfair Display', serif; }
-        .swiper { width: 100%; height: 600px; border-radius: 40px; }
-        .parallax-img { transition: transform 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
-        .reveal { opacity: 0; transform: translateY(50px); }
+        .reveal { opacity: 0; transform: translateY(30px); }
         
-        /* Premium Image Border */
-        .img-frame {
-            position: relative;
-            padding: 20px;
-        }
-        .img-frame::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 80%;
-            height: 80%;
-            border: 1px solid #e5e5e5;
-            z-index: -1;
-            border-radius: 40px;
-        }
+        /* Matching the Index Sidebar Transition */
+        #mobileNav { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        .parallax-img { transition: transform 0.8s ease-out; }
     </style>
 </head>
 <body>
 
-    <nav class="flex items-center justify-between px-10 py-6 absolute w-full z-50">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
-            <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs">CL</div>
-            <span class="font-bold tracking-widest text-sm uppercase">Ceylon Luxe</span>
+    <div id="mobileNav" class="fixed inset-y-0 right-0 w-[280px] bg-white z-[100] transform translate-x-full shadow-2xl flex flex-col p-10">
+        <button onclick="toggleMenu()" class="self-end text-3xl text-black mb-10">&times;</button>
+        <div class="flex flex-col gap-8 text-sm font-bold uppercase tracking-[0.3em] text-gray-900">
+            <a href="index.html" onclick="toggleMenu()">Home</a>
+            <a href="destinations.html" onclick="toggleMenu()">Destinations</a>
+            <a href="about.html" onclick="toggleMenu()">Our Story</a>
+            <a href="packages.html" onclick="toggleMenu()">Packages</a>
+            <a href="booking.html" onclick="toggleMenu()">Booking</a>
         </div>
-        <div class="hidden md:flex gap-10 text-[10px] uppercase tracking-widest font-bold">
-            <a href="index.html" class="hover:opacity-50 transition">Home</a>
-            <a href="destinations.html" class="hover:opacity-50 transition">Destinations</a>
-            <a href="about.html" class="border-b border-black pb-1">Our Story</a>
+        <div class="mt-auto border-t pt-8">
+            <p class="text-[9px] uppercase tracking-widest text-gray-400">Get in touch</p>
+            <p class="text-xs mt-2">hello@ceylonluxe.com</p>
+        </div>
+    </div>
+
+    <nav class="flex items-center justify-between px-6 md:px-10 py-6 absolute w-full z-50">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+                <span class="text-white text-xs">CL</span>
+            </div>
+            <span class="font-bold tracking-widest text-sm uppercase text-black">Ceylon Luxe</span>
+        </div>
+        
+        <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-widest font-semibold text-gray-900/80">
+            <a href="index.html" class="hover:text-black transition">Home</a>
+            <a href="destinations.html" class="hover:text-black transition">Destinations</a>
+            <a href="about.html" class="text-black border-b border-black">Our Story</a>
             <a href="packages.html" class="hover:opacity-50 transition">Packages</a>
             <a href="booking.html" class="hover:text-gray-400 transition">Booking</a>
         </div>
+
+        <button onclick="toggleMenu()" class="md:hidden text-black focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+            </svg>
+        </button>
     </nav>
 
-    <section class="min-h-screen flex flex-col lg:flex-row items-center pt-20">
-        <div class="lg:w-1/2 p-10 lg:p-24 flex flex-col justify-center" id="hero-text">
-            <span class="text-[11px] font-bold uppercase tracking-[0.6em] text-gray-400 mb-6">Established 2024</span>
-            <h1 class="text-6xl md:text-8xl serif leading-tight mb-8">Redefining <br><span class="italic">Island Luxury.</span></h1>
-            <p class="text-lg font-light text-gray-600 leading-relaxed max-w-md">
+    <section class="min-h-screen flex flex-col lg:flex-row items-center">
+        <div class="lg:w-1/2 p-10 lg:p-24 flex flex-col justify-center mt-20 lg:mt-0" id="hero-text">
+            <span class="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.6em] text-gray-400 mb-6">Established 2024</span>
+            <h1 class="text-5xl md:text-8xl serif leading-tight mb-8">Redefining <br><span class="italic">Island Luxury.</span></h1>
+            <p class="text-base md:text-lg font-light text-gray-600 leading-relaxed max-w-md">
                 Ceylon Luxe was born from a simple realization: Sri Lanka’s beauty isn't just in its landscapes, but in the slow, intentional rhythm of its heritage.
             </p>
         </div>
-        <div class="lg:w-1/2 h-[70vh] lg:h-screen overflow-hidden relative">
+        <div class="lg:w-1/2 h-[50vh] lg:h-screen w-full overflow-hidden relative">
             <img src="https://images.unsplash.com/photo-1546708973-b339540b5162?q=80&w=1200" alt="Sri Lanka Heritage" class="w-full h-full object-cover parallax-img" id="hero-img">
         </div>
     </section>
 
-    <section class="py-32 px-10 bg-[#f9f9f9]">
+    <section class="py-20 md:py-32 px-6 md:px-10 bg-[#f9f9f9]">
         <div class="container mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 reveal">
                 <div class="max-w-xl">
                     <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-gray-400 mb-4 block">Our Approach</span>
-                    <h2 class="text-5xl md:text-6xl serif italic leading-tight">Crafting the <br>Unforgettable</h2>
+                    <h2 class="text-4xl md:text-6xl serif italic leading-tight">Crafting the <br>Unforgettable</h2>
                 </div>
-                <div class="max-w-xs mt-8 md:mt-0">
-                    <p class="text-sm text-gray-500 leading-relaxed border-l border-gray-200 pl-6">
+                <div class="max-w-xs mt-6 md:mt-0">
+                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed md:border-l border-gray-200 md:pl-6">
                         We don't just book tours. We curate emotions. Every moment is hand-crafted to become a timeless memory.
                     </p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
-                
-                <div class="md:col-span-4 group relative overflow-hidden rounded-[40px] reveal" style="transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1586902197503-e71026292412?q=80&w=1200" 
-                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-1000">
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-500"></div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <div class="md:col-span-4 h-[400px] md:h-[600px] group relative overflow-hidden rounded-[30px] md:rounded-[40px] reveal">
+                    <img src="https://images.unsplash.com/photo-1586902197503-e71026292412?q=80&w=1200" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-1000">
+                    <div class="absolute inset-0 bg-black/20"></div>
                     <div class="absolute bottom-8 left-8">
                         <span class="text-[9px] text-white/70 uppercase tracking-widest block mb-2">Central</span>
                         <h3 class="text-2xl text-white serif italic">Highland Soul</h3>
                     </div>
                 </div>
 
-                <div class="md:col-span-5 md:mt-12 group relative overflow-hidden rounded-[40px] reveal" style="transition-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1620619767323-b95a89183081?q=80&w=1200" 
-                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-1000">
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-500"></div>
+                <div class="md:col-span-5 h-[400px] md:h-[600px] md:mt-12 group relative overflow-hidden rounded-[30px] md:rounded-[40px] reveal">
+                    <img src="https://images.unsplash.com/photo-1620619767323-b95a89183081?q=80&w=1200" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-1000">
+                    <div class="absolute inset-0 bg-black/20"></div>
                     <div class="absolute bottom-8 left-8">
                         <span class="text-[9px] text-white/70 uppercase tracking-widest block mb-2">Heritage</span>
                         <h3 class="text-2xl text-white serif italic">Ancient Echoes</h3>
                     </div>
                 </div>
 
-                <div class="md:col-span-3 h-[300px] md:h-auto group relative overflow-hidden rounded-[40px] reveal" style="transition-delay: 0.3s;">
-                    <img src="images/sigiriya.jpg" 
-                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-1000">
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition duration-500"></div>
+                <div class="md:col-span-3 h-[400px] md:h-[600px] group relative overflow-hidden rounded-[30px] md:rounded-[40px] reveal">
+                    <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1200" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-1000">
+                    <div class="absolute inset-0 bg-black/20"></div>
                     <div class="absolute bottom-8 left-8">
                         <span class="text-[9px] text-white/70 uppercase tracking-widest block mb-2">Coastal</span>
                         <h3 class="text-2xl text-white serif italic">Azure Serenity</h3>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-<section class="py-32 px-10 container mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            
-            <div class="lg:col-span-4 lg:col-start-2 reveal"> 
-                <div class="relative group max-w-sm mx-auto"> 
-                    <div class="rounded-[30px] overflow-hidden shadow-xl border-[12px] border-white">
-                        <img src="images/me.jpg" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition duration-1000 transform hover:scale-105">
+    <section class="py-20 md:py-32 px-6 md:px-10 container mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div class="lg:col-span-5 lg:col-start-1 reveal order-2 lg:order-1"> 
+                <div class="relative group max-w-sm mx-auto lg:ml-0"> 
+                    <div class="rounded-[30px] overflow-hidden shadow-xl border-[8px] md:border-[12px] border-white">
+                        <img src="images/me.jpg" class="w-full h-auto object-cover grayscale hover:grayscale-0 transition duration-1000" onerror="this.src='https://ui-avatars.com/api/?name=L+Janaan&background=000&color=fff'">
                     </div>
-                    
-                    <div class="absolute -bottom-4 -right-4 bg-black text-white p-6 rounded-2xl shadow-2xl hidden md:block">
+                    <div class="absolute -bottom-4 -right-4 bg-black text-white p-6 rounded-2xl shadow-2xl">
                         <p class="serif italic text-lg leading-tight">Curating the<br>Extraordinary</p>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-6 space-y-8 reveal">
+            <div class="lg:col-span-6 space-y-8 reveal order-1 lg:order-2">
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-[0.5em] text-gray-400 mb-4 block">The Visionary</span>
                     <h2 class="text-4xl md:text-5xl serif mb-6 italic leading-tight">Lubna Janaan Jiffry</h2>
-                    <p class="text-lg text-gray-600 font-light leading-relaxed max-w-md">
+                    <p class="text-base md:text-lg text-gray-600 font-light leading-relaxed max-w-md">
                         "I created Ceylon Luxe to offer more than just a visit—I wanted to offer an immersion. Travel should be a poetic dialogue between the soul and the earth."
                     </p>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-gray-100">
                     <div>
                         <h4 class="text-[10px] font-bold uppercase tracking-widest mb-2">Heritage First</h4>
@@ -147,7 +150,6 @@
                         <p class="text-xs text-gray-500 font-light leading-relaxed">Finding beauty in the quiet, exclusive moments away from the crowds.</p>
                     </div>
                 </div>
-
                 <div class="pt-4">
                     <p class="text-[10px] italic font-semibold text-black border-l-2 border-black pl-4 uppercase tracking-[0.3em]">Founder & Creative Director</p>
                 </div>
@@ -155,53 +157,53 @@
         </div>
     </section>
 
-    <section class="py-20 bg-black text-white px-10 rounded-t-[60px]">
-        <div class="container mx-auto grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+    <section class="py-16 md:py-24 bg-black text-white px-6 md:px-10 rounded-t-[40px] md:rounded-t-[60px]">
+        <div class="container mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
             <div class="reveal">
-                <h4 class="text-5xl serif mb-2 italic">150+</h4>
-                <p class="text-[10px] uppercase tracking-widest text-gray-500">Curated Stays</p>
+                <h4 class="text-4xl md:text-5xl serif mb-2 italic">150+</h4>
+                <p class="text-[9px] md:text-[10px] uppercase tracking-widest text-gray-500">Curated Stays</p>
             </div>
             <div class="reveal">
-                <h4 class="text-5xl serif mb-2 italic">25k</h4>
-                <p class="text-[10px] uppercase tracking-widest text-gray-500">Stories Told</p>
+                <h4 class="text-4xl md:text-5xl serif mb-2 italic">25k</h4>
+                <p class="text-[9px] md:text-[10px] uppercase tracking-widest text-gray-500">Stories Told</p>
             </div>
             <div class="reveal">
-                <h4 class="text-5xl serif mb-2 italic">09</h4>
-                <p class="text-[10px] uppercase tracking-widest text-gray-500">Local Provinces</p>
+                <h4 class="text-4xl md:text-5xl serif mb-2 italic">09</h4>
+                <p class="text-[9px] md:text-[10px] uppercase tracking-widest text-gray-500">Local Provinces</p>
             </div>
             <div class="reveal">
-                <h4 class="text-5xl serif mb-2 italic">100%</h4>
-                <p class="text-[10px] uppercase tracking-widest text-gray-500">Bespoke Focus</p>
+                <h4 class="text-4xl md:text-5xl serif mb-2 italic">100%</h4>
+                <p class="text-[9px] md:text-[10px] uppercase tracking-widest text-gray-500">Bespoke Focus</p>
             </div>
         </div>
     </section>
 
-    <footer class="bg-black text-white pt-20 pb-10 px-10 border-t border-white/10">
-        <div class="container mx-auto text-center">
-            <p class="text-[11px] font-bold uppercase tracking-widest mb-4">Colombo • Horton Place</p>
-            <p class="text-gray-600 text-xs">© 2026 Ceylon Luxe. All Rights Reserved.</p>
-        </div>
+    <footer class="bg-black text-white pt-10 pb-10 px-6 text-center border-t border-white/10">
+        <p class="text-[10px] font-bold uppercase tracking-widest mb-4">Colombo • Horton Place</p>
+        <p class="text-gray-600 text-[10px]">© 2026 Ceylon Luxe. All Rights Reserved.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Initialize Swiper
-        var swiper = new Swiper(".mySwiper", {
-            pagination: { el: ".swiper-pagination", clickable: true },
-            autoplay: { delay: 4000 },
-            loop: true,
-            effect: "fade"
-        });
-
-        // GSAP Animations
         gsap.registerPlugin(ScrollTrigger);
+
+        // Identical Toggle Function to Index
+        function toggleMenu() {
+            const menu = document.getElementById('mobileNav');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            }
+        }
 
         // Hero Parallax
         gsap.to("#hero-img", {
             yPercent: 20,
             ease: "none",
             scrollTrigger: {
-                trigger: "header",
+                trigger: "section",
                 start: "top top",
                 end: "bottom top",
                 scrub: true
@@ -211,12 +213,14 @@
         // Content Reveal
         gsap.utils.toArray(".reveal").forEach(elem => {
             gsap.to(elem, {
-                scrollTrigger: elem,
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 90%",
+                },
                 opacity: 1,
                 y: 0,
-                duration: 1.5,
-                ease: "power4.out",
-                stagger: 0.2
+                duration: 1.2,
+                ease: "power3.out"
             });
         });
     </script>

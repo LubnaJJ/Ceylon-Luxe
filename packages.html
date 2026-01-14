@@ -9,9 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Montserrat', sans-serif; background-color: #fafafa; color: #1a1a1a; overflow-x: hidden; }
         .serif { font-family: 'Playfair Display', serif; }
         
+        /* Matching the Index Sidebar Transition */
+        #mobileNav { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
         /* Smooth Package Card Hover */
         .package-card { 
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -39,27 +43,22 @@
             100% { opacity: 0.8; transform: scale(1); }
         }
         .pulse-badge { animation: subtle-pulse 3s infinite ease-in-out; }
-
-        /* Sidebar Transition */
-        #mobile-menu { transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0); }
     </style>
 </head>
 <body>
 
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-[100] translate-x-full flex flex-col p-10">
-        <div class="flex justify-between items-center mb-16">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs">CL</div>
-                <span class="font-bold tracking-widest text-sm uppercase">Ceylon Luxe</span>
-            </div>
-            <button onclick="toggleMenu()" class="text-3xl">&times;</button>
+    <div id="mobileNav" class="fixed inset-y-0 right-0 w-[280px] bg-white z-[100] transform translate-x-full shadow-2xl flex flex-col p-10">
+        <button onclick="toggleMenu()" class="self-end text-3xl text-black mb-10">&times;</button>
+        <div class="flex flex-col gap-8 text-sm font-bold uppercase tracking-[0.3em] text-gray-900">
+            <a href="index.html" onclick="toggleMenu()">Home</a>
+            <a href="destinations.html" onclick="toggleMenu()">Destinations</a>
+            <a href="about.html" onclick="toggleMenu()">Our Story</a>
+            <a href="packages.html" onclick="toggleMenu()">Packages</a>
+            <a href="booking.html" onclick="toggleMenu()">Booking</a>
         </div>
-        <div class="flex flex-col gap-8 text-2xl serif italic">
-            <a href="index.html" class="hover:pl-4 transition-all duration-300">Home</a>
-            <a href="destinations.html" class="hover:pl-4 transition-all duration-300">Destinations</a>
-            <a href="about.html" class="hover:pl-4 transition-all duration-300">Our Story</a>
-            <a href="packages.html" class="border-l-4 border-black pl-4">Packages</a>
-            <a href="booking.html" class="hover:pl-4 transition-all duration-300">Booking</a>
+        <div class="mt-auto border-t pt-8">
+            <p class="text-[9px] uppercase tracking-widest text-gray-400">Get in touch</p>
+            <p class="text-xs mt-2">hello@ceylonluxe.com</p>
         </div>
     </div>
 
@@ -77,9 +76,10 @@
             <a href="booking.html" class="hover:text-gray-400 transition">Booking</a>
         </div>
 
-        <button onclick="toggleMenu()" class="md:hidden flex flex-col gap-1.5">
-            <div class="w-6 h-0.5 bg-black"></div>
-            <div class="w-6 h-0.5 bg-black"></div>
+        <button onclick="toggleMenu()" class="md:hidden text-black focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+            </svg>
         </button>
     </nav>
 
@@ -246,11 +246,16 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Sidebar Toggle
+        // Sidebar Toggle (Updated to match Index.html)
         function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('translate-x-full');
-            document.body.classList.toggle('overflow-hidden');
+            const menu = document.getElementById('mobileNav');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('translate-x-full');
+                document.body.style.overflow = 'auto';
+            }
         }
 
         // Page Header Fade
